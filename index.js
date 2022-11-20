@@ -3,6 +3,13 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const cors = require('cors')
+
+const usersRoutes = require('./routes/userRoutes')
+const postsRoutes = require('./routes/productRoutes')
+const cartRoutes = require('./routes/cartRoutes')
+const reviewsRoutes = require('./routes/reviewRoutes')
+const historyRoutes = require('./routes/historyRoutes')
 
 app.use(bodyParser.json());
 
@@ -13,9 +20,17 @@ mongoose.connect(
     () => console.log('Connected to DB')
 );
 
+//Routes
 app.get('/', (req, res) => {
     res.send('We are on home');
 });
+app.use(express.json())
+app.use(cors())
+app.use('/users', usersRoutes)
+app.use('/products', postsRoutes)
+app.use('/cart', cartRoutes)
+app.use('/reviews', reviewsRoutes)
+app.use('/history', historyRoutes)
 
 //Listen to server
 const port = process.env.PORT || 3000;
