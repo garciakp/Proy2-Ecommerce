@@ -38,11 +38,11 @@ router.get("/:category", async (req, res) => {
   }
 });
 
-//update category
-router.patch("/:category", async (req, res) => {
+//update category needs to be auth (id)
+router.patch("/:id", async (req, res) => {
   try {
     const updatedCategory = await productSchema.updateOne(
-      { category: req.params.category },
+      { _id: req.params.id },
       { $set: { category: req.body.category } }
     );
     res.json(updatedCategory);
