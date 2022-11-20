@@ -3,8 +3,8 @@ const router = express.Router();
 
 const productSchema = require("../models/ProductModel");
 
-//Create category
-router.post("/", async (req, res) => {
+//Create category needs to be auth (id)
+router.post("/:id", async (req, res) => {
   const category = new productSchema({
     category: req.body.category,
   });
@@ -51,12 +51,10 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-//Delete category
-router.delete("/:category", async (req, res) => {
+//Delete category needs to be auth (id)
+router.delete("/:id", async (req, res) => {
   try {
-    const removedCategory = await productSchema.remove({
-      category: req.params.category,
-    });
+    const removedCategory = await productSchema.remove({ _id: req.params.id });
     res.json(removedCategory);
   } catch (err) {
     res.json({ message: err });
