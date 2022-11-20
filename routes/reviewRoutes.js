@@ -14,6 +14,45 @@ router.get('/', async (req, res) => {
     })
 })
 
+router.get('/user', async (req, res) => {
+    await review
+    .find({
+        user_id:req.query.user_id
+    })
+    .then(data =>{
+        res.json(data)
+    })
+    .catch(error=>{
+        res.json(error)
+    })
+})
+
+router.get('/product', async (req, res) => {
+    await review
+    .find({
+        product_id:req.query.product_id
+    })
+    .then(data =>{
+        res.json(data)
+    })
+    .catch(error=>{
+        res.json(error)
+    })
+})
+
+router.get('/rating', async (req, res) => {
+    await review
+    .find({
+        rating:{$gte:req.query.rating}
+    })
+    .then(data =>{
+        res.json(data)
+    })
+    .catch(error=>{
+        res.json(error)
+    })
+})
+
 router.post('/', async (req, res) => {
     const newReview = new reviewSchema({
         user_id:req.body.user_id,
@@ -22,6 +61,17 @@ router.post('/', async (req, res) => {
         description:req.body.description,
     })
     newReview.save()
+    .then(data =>{
+        res.json(data)
+    })
+    .catch(error=>{
+        res.json(error)
+    })
+})
+
+router.delete('/', async (req, res) => {
+    await reviewSchema.findByIdAndDelete
+    (req.query.review_id)
     .then(data =>{
         res.json(data)
     })

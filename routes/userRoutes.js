@@ -73,4 +73,37 @@ router.get('/', async (req, res) => {
         })
     })
 })
+
+router.put('/', async (req, res) => {
+    userSchema.findOneAndUpdate({
+        _id: req.body.user_id
+    }, {
+        username: req.body.username,
+        password: req.body.password
+    }).then( data => {
+        res.json(data)
+    }).catch(error=>{
+        res.status(500).json({
+            error: error
+        })
+    })
+})
+
+router.delete('/', async (req, res) => {
+    userSchema.findOneAndDelete({
+        _id: req.query.user_id
+    }).then( data => {
+        res.json(data)
+    }).catch(error=>{
+        res.status(500).json({
+            error: error
+        })
+    })
+})
+
+
+
+
+
+
 module.exports = router
